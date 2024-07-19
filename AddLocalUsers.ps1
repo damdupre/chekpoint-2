@@ -1,26 +1,47 @@
-Write-Host "--- Début du script ---"
-Function Random-Password ($length = 6){    $punc = 46..46
+Write-Host "--- DÃ©but du script ---"
+
+
+Function Random-Password ($length = 6)
+{
+    $punc = 46..46
     $digits = 48..57
-    $letters = 65..90 + 97..122
+    $letters = 65..90 + 97..122
+
     $password = get-random -count $length -input ($punc + $digits + $letters) |`
         ForEach -begin { $aa = $null } -process {$aa += [char]$_} -end {$aa}
     Return $password.ToString()
 }
 
-Function ManageAccentsAndCapitalLetters{    param ([String]$String)    
-    $StringWithoutAccent = $String -replace '[éèêë]', 'e' -replace '[àâä]', 'a' -replace '[îï]', 'i' -replace '[ôö]', 'o' -replace '[ùûü]', 'u'    $StringWithoutAccentAndCapitalLetters = $StringWithoutAccent.ToLower()    $StringWithoutAccentAndCapitalLetters
+Function ManageAccentsAndCapitalLetters
+{
+    param ([String]$String)
+    
+    $StringWithoutAccent = $String -replace '[Ã©Ã¨ÃªÃ«]', 'e' -replace '[Ã Ã¢Ã¤]', 'a' -replace '[Ã®Ã¯]', 'i' -replace '[Ã´Ã¶]', 'o' -replace '[Ã¹Ã»Ã¼]', 'u'
+    $StringWithoutAccentAndCapitalLetters = $StringWithoutAccent.ToLower()
+    $StringWithoutAccentAndCapitalLetters
 }
 
-$Path = "C:\Script"$CsvFile = "$Path\Users.csv"$LogFile = "$Path\Log.log"#modification du nombre de ligne ignorée zt des champ selectionner
-$Users = Import-Csv -Path $CsvFile -Delimiter ";" -Header "prenom","nom","fonction","description" -Encoding UTF8  | Select-Object -Skip 1
-#création du roupe utilisateur
+$Path = "C:\Script"
+$CsvFile = "$Path\Users.csv"
+$LogFile = "$Path\Log.log"
+#modification du nombre de ligne ignorÃ©e zt des champ selectionner
+$Users = Import-Csv -Path $CsvFile -Delimiter ";" -Header "prenom","nom","fonction","description" -Encoding UTF8  | Select-Object -Skip 1
+
+#crÃ©ation du roupe utilisateur
 new-LocalGroup "Utilisateur"
 
 foreach ($User in $Users)
 {
-    $Prenom = ManageAccentsAndCapitalLetters -String $User.prenom    $Nom = ManageAccentsAndCapitalLetters -String $User.Nom
+    $Prenom = ManageAccentsAndCapitalLetters -String $User.prenom
+    $Nom = ManageAccentsAndCapitalLetters -String $User.Nom
     $Name = "$Prenom.$Nom"
-    #modification de la variable    If (-not (Get-LocalUser -Name $Name ))    {       #ajout de la ligne description etmodification de l'expiration du mot de passe        $Pass = Random-Password        $Password = (ConvertTo-secureString $Pass -AsPlainText -Force)
+    #modification de la variable
+    If (-not (Get-LocalUser -Name $Name ))
+    {
+   
+    #ajout de la ligne description etmodification de l'expiration du mot de passe
+        $Pass = Random-Password
+        $Password = (ConvertTo-secureString $Pass -AsPlainText -Force)
         $Description = "$($user.description) - $($User.fonction)"
         $UserInfo = @{
             Name                 = $Nom
@@ -32,14 +53,14 @@ foreach ($User in $Users)
        }
        else
        {
-       write-host -ForegroundColor red "l'utilisateur $Name existe déja"
+       write-host -ForegroundColor red "l'utilisateur $Name existe dÃ©ja"
 
         } 
 
         New-LocalUser @UserInfo
         Add-LocalGroupMember -Group "Utilisateur" -Member $Name
        #modification de la ligne pour affichage du mot de passe en vert
-        write-host -ForegroundColor green "L'utilisateur $Name a été crée avec le mot de passe $pass"
+        write-host -ForegroundColor green "L'utilisateur $Name a Ã©tÃ© crÃ©e avec le mot de passe $pass"
     }
 }
 
