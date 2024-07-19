@@ -5,7 +5,7 @@ Dans un premier temps aprés la connexion j"ai fait sur chaque machine un `ipcon
 
 J'ai fait un Ping du serveur (172.16.10.10/24) vers le client (170.16.100.50/24) et celui çi me retourne une erreur car les deux machine ne sont pas dans le même reseaux .
 
-![ip diff]()
+![ip diff](https://github.com/damdupre/chekpoint-2/blob/main/ressources/ip%20diff.png)
 
 > Adresse IPv4 serveur 172.16.10.10    
 Masque de réseau : 255.255.255.0  
@@ -21,17 +21,17 @@ Dernière adresse : 172.16.100.254
 
 Pour que le ping fonctionne il faut mettre le client sur le même reseaux que le serveur.  
 Pour ça j'utilise l'application `exécuter` ou en cherchant dans la barre de recherche ou en utilisant la combinaison ![w+r]() puis la comande `ncpa.cpl` qui m'ouvre directement la fenétre de la carte réseaux.  
-![carte]()  
+![carte](https://github.com/damdupre/chekpoint-2/blob/main/ressources/carte.png)  
  je me rend dans les propritétées de la carte réseaux .  
- ![propriétées]()   
+ ![propriétées](https://github.com/damdupre/chekpoint-2/blob/main/ressources/propri%C3%A9t%C3%A9es.png)   
 Dans le cadre **général** je modifie l'adresse IP pour une dans le même réseaux que le serveur (172.16.10.50/24), et je coche la case `Valider les paramètres en quittant`
  
 Mainteant mon client a bien l'adresse IP `172.16.10.50` et le ping fonctionne .
-![ping ok]() 
+![ping ok](https://github.com/damdupre/chekpoint-2/blob/main/ressources/ping%20ok.png) 
 
  ### Q.1.2 Montre et explique le résultat d'un ping du serveur vers le client avec le nom des machines.
  En faisant un ping du serveur vers le client avec le nom du client (Client1)   
- ![ping nom]()    
+ ![ping nom](https://github.com/damdupre/chekpoint-2/blob/main/ressources/ping%20nom.png)    
 
  J'ai un retour par l'adresse IPV6 car le serveur a fait un ping sur l'adresse IPV6 de liaison local .  
  Dans toutes les versions de Windows à partir de Vista, les adresses UPv6 UNCAST sont préférées aux adresses IPv4 (selon le RFC 3484).  
@@ -40,13 +40,13 @@ Si le serveur essaie d’accéder à un client  à l’aide d’un protocole ICM
 ### Q.1.3 Désactive le protocole IPv6 sur le client.  
 
 En modifiant les parametres de la carte reseaux et en décochant Protocole IPV6 je désactive IPV6 sur le client1    
-![stop ipv6]()  
+![stop ipv6](https://github.com/damdupre/chekpoint-2/blob/main/ressources/stopipv6.png)  
 
 Je refait un ping avec le nom du client et le retour est ok car Les systèmes d'exploitation modernes maintiennent un cache DNS local qui stocke les résolutions de noms précédents. 
 
 ### Q.1.4 Change et montre les configurations réseaux sur le client et/ou sur le serveur pour mettre en place le DHCP.
 Sur le servuer le rôle DHCP est déja installer , sur le client je retourne dans la configuration de la  carte réseau et choisie `Obtenir une adresse IP automatiquement`  
-![changeip]()   
+![changeip](https://github.com/damdupre/chekpoint-2/blob/main/ressources/changeip.png)   
 On voit bien le changement d'adresse IP qui est passée de `172.16.10.50` à `172.16.10.20`  
 
 ### Q.1.5 Explique pourquoi le client ne récupère pas la 1ère adresse disponible sur cette plage.  
@@ -57,13 +57,13 @@ Cette adresse est réservée et ne peut pas être attribuée.
  
 ### Q.1.6 Fais une modification sur le DHCP pour que le client ai l'adresse IP 172.16.10.15.
 Pour que le client est une adresse définie nous devons sur le serveur DHCP faire une réservation d'adresse   
-![dhcp]()  
+![dhcp](https://github.com/damdupre/chekpoint-2/blob/main/ressources/dhcp.png)  
 
 je remplis les champs demandés .  
-![reserc]()  
+![reserc](https://github.com/damdupre/chekpoint-2/blob/main/ressources/reserv.png)  
 
 Sur le client je restitue mon adresse ip avec `ipconfig / release` puis en redemande une avec `ipconfig /renew`  
-![newip]()  
+![newip](https://github.com/damdupre/chekpoint-2/blob/main/ressources/newip.png)  
 Mon **Client1** à changer d'adresse.  
 
 ### Q.1.7 Au vu de tes manipulations, explique l'intérêt de passer ce réseau en IPv6 ?
